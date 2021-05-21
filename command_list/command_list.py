@@ -35,9 +35,9 @@ class command_list(object):
         all_content = [full_string.split()[5] for full_string in
                        subprocess.run(["dpkg", '-c', deb_path], capture_output = True)
                        .stdout.decode("utf-8").split("\n")[:-1]]
-        binaries = [os.path.basename(b.replace("./data/data/com.termux/files/usr/bin/", "")) for b in all_content
-                    if b.startswith("./data/data/com.termux/files/usr/bin/")
-                    and os.path.basename(b.replace("./data/data/com.termux/files/usr/bin/", ""))]
+        binaries = [os.path.basename(b.replace("./data/data/hilled.pwnterm/files/usr/bin/", "")) for b in all_content
+                    if b.startswith("./data/data/hilled.pwnterm/files/usr/bin/")
+                    and os.path.basename(b.replace("./data/data/hilled.pwnterm/files/usr/bin/", ""))]
         return binaries
         return binaries
 

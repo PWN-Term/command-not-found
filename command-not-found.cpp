@@ -19,93 +19,13 @@
 #include <sys/stat.h>
 
 #ifndef PREFIX
-# define PREFIX "/data/data/com.termux/files/usr"
+# define PREFIX "/data/data/hilled.pwnterm/files/usr"
 #endif
 
 using namespace std;
 
-list<string> games_commands = {
-#ifdef __aarch64__
-# include "game-packages/commands-aarch64-1150e2f.h"
-#elif defined __arm__
-# include "game-packages/commands-arm-1150e2f.h"
-#elif defined __i686__
-# include "game-packages/commands-i686-1150e2f.h"
-#elif defined __x86_64__
-# include "game-packages/commands-x86_64-1150e2f.h"
-#else
-# error Failed to detect arch
-#endif
-};
-
 list<string> main_commands = {
-#ifdef __aarch64__
 # include "termux-packages/commands-aarch64-600a3f6.h"
-#elif defined __arm__
-# include "termux-packages/commands-arm-600a3f6.h"
-#elif defined __i686__
-# include "termux-packages/commands-i686-600a3f6.h"
-#elif defined __x86_64__
-# include "termux-packages/commands-x86_64-600a3f6.h"
-#else
-# error Failed to detect arch
-#endif
-};
-
-list<string> root_commands = {
-#ifdef __aarch64__
-# include "termux-root-packages/commands-aarch64-48be2f1.h"
-#elif defined __arm__
-# include "termux-root-packages/commands-arm-48be2f1.h"
-#elif defined __i686__
-# include "termux-root-packages/commands-i686-48be2f1.h"
-#elif defined __x86_64__
-# include "termux-root-packages/commands-x86_64-48be2f1.h"
-#else
-# error Failed to detect arch
-#endif
-};
-
-list<string> science_commands = {
-#ifdef __aarch64__
-# include "science-packages/commands-aarch64-6485c13.h"
-#elif defined __arm__
-# include "science-packages/commands-arm-6485c13.h"
-#elif defined __i686__
-# include "science-packages/commands-i686-6485c13.h"
-#elif defined __x86_64__
-# include "science-packages/commands-x86_64-6485c13.h"
-#else
-# error Failed to detect arch
-#endif
-};
-
-list<string> unstable_commands = {
-#ifdef __aarch64__
-# include "unstable-packages/commands-aarch64-4d08920.h"
-#elif defined __arm__
-# include "unstable-packages/commands-arm-4d08920.h"
-#elif defined __i686__
-# include "unstable-packages/commands-i686-4d08920.h"
-#elif defined __x86_64__
-# include "unstable-packages/commands-x86_64-4d08920.h"
-#else
-# error Failed to detect arch
-#endif
-};
-
-list<string> x11_commands = {
-#ifdef __aarch64__
-# include "x11-packages/commands-aarch64-36b739a.h"
-#elif defined __arm__
-# include "x11-packages/commands-arm-36b739a.h"
-#elif defined __i686__
-# include "x11-packages/commands-i686-36b739a.h"
-#elif defined __x86_64__
-# include "x11-packages/commands-x86_64-36b739a.h"
-#else
-# error Failed to detect arch
-#endif
 };
 
 struct info {string binary, repository;};
@@ -213,21 +133,6 @@ int main(int argc, const char *argv[]) {
   string sources_prefix = string(PREFIX) + "/etc/apt/sources.list.d/";
 
   res = termux_look_for_packages(command, &main_commands, &best_distance, &package_map, "");
-  if (res != 0) { return res; }
-
-  res = termux_look_for_packages(command, &games_commands, &best_distance, &package_map, "game");
-  if (res != 0) { return res; }
-
-  res = termux_look_for_packages(command, &root_commands, &best_distance, &package_map, "root");
-  if (res != 0) { return res; }
-
-  res = termux_look_for_packages(command, &science_commands, &best_distance, &package_map, "science");
-  if (res != 0) { return res; }
-
-  res = termux_look_for_packages(command, &unstable_commands, &best_distance, &package_map, "unstable");
-  if (res != 0) { return res; }
-
-  res = termux_look_for_packages(command, &x11_commands, &best_distance, &package_map, "x11");
   if (res != 0) { return res; }
 
   if (best_distance == -1 || best_distance > 3) {
