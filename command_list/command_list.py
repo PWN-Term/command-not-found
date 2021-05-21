@@ -26,7 +26,7 @@ class command_list(object):
         new_command_list_file = '-'.join(self.command_list_file.split("-")[:-1] + [new_commit+".h"])
         with open(new_command_list_file, 'w') as f:
             for pkg, binaries in sorted(self.packages.items()):
-                f.write('"'+pkg+'",\n')
+                f.write('"'+apt+'",\n')
                 for binary in sorted(binaries):
                     f.write('" '+binary+'",\n')
 
